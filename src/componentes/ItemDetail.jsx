@@ -17,9 +17,7 @@ const restar = () =>{
     cantidad> 1 && setCantidad(cantidad - 1);
 }
 
-  const agregar = () =>{
-    console.log({...productos, cantidad})
-  }
+ 
 
   return (
     <>
