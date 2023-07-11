@@ -6,7 +6,7 @@ import { CartContext } from '../context/CartContext';
 export const ItemDetail = ({ productos }) => {
 
   const {carrito, agregarAlCarrito} = useContext(CartContext);
-  console.log(carrito)
+  
 
   const [cantidad,setCantidad] = useState(1)
 
@@ -50,7 +50,7 @@ const restar = () =>{
           <Typography component='p' variant='body1' sx={{textAlign: 'start', m: '10px 0', border: '2px solid gray', width: '20%', borderRadius: '15px', display: 'flex', justifyContent: 'center'}}>
             Precio: <span style={{ color: 'green', fontWeight: '600' }}>${productos.price}US</span>
           </Typography>
-          <ItemCount sumar={sumar} restar={restar} cantidad={cantidad} agregar= {() =>{agregarAlCarrito(item, cantidad)}} productos={productos}/>
+          <ItemCount sumar={sumar} restar={restar} cantidad={cantidad} agregar= {() =>{agregarAlCarrito(productos, cantidad)}} productos={productos}/>
           
         </div>
       </div>
