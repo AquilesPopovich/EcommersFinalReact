@@ -4,50 +4,61 @@ import { CartWidget } from './CartWidget';
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import logo from "../assets/logo.png";
-
-const pages = [
-  { name: 'Home', path: '#' },
-  { name: 'Products', path: '#' },
-  { name: 'Contact', path: '#' },
-];
+import data from '../data/data.json';
 
 function NavBar() {
   return (
-    <AppBar position="static" sx={{ background: 'black' }}>
+    <AppBar position="static" sx={{ background: 'black', marginBottom: '15px', borderRadius: '10px' }}>
       <Toolbar variant="dense">
         <Typography
           variant="h6"
           noWrap
           component="div"
-          sx={{
-            mx: 'auto',
-            fontFamily: 'monospace',
-            fontWeight: 700,
-            letterSpacing: '.3rem',
-            color: 'inherit',
-            textDecoration: 'none',
-          }}
+          sx={{ mx: 'auto', display: 'flex', alignItems: 'center' }}
         >
-          <Link to="/">
-            <img src={logo} alt="logo" style={{ width: '40px' }} />
+          <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+            <img src={logo} alt="logo" style={{ width: '40px', marginRight: '5px' }} />
           </Link>
         </Typography>
 
-        <Box sx={{ flexGrow: 1, justifyContent: 'flex-end' }}>
-          {pages.map((page) => (
+        <Box sx={{ flexGrow: 1, justifyContent: 'start', display: 'flex' }}>
+
+          <ul style={{ listStyle: 'none', display: 'flex', alignItems: 'center', margin: 0, padding: 0 }}>
             <Button
               component={Link}
-              to={page.path}
-              key={page.name}
-              sx={{ mx: 2, color: 'white' }}
+              to="/Home"
+              sx={{
+                textDecoration: 'none',
+                color: 'inherit', margin: ' 0 1rem 0 2.5rem',
+                '&:hover': { color: 'blue'
+                }
+              }}
             >
-              {page.name}
+              Inicio
             </Button>
-          ))}
+            <Button
+              component={Link}
+              to="/"
+              sx={{
+                textDecoration: 'none',
+                color: 'inherit', margin: ' 0 1rem',
+                '&:hover': { color: 'blue'}
+              }}
+            >
+              Productos
+            </Button>
+            <Button
+              component={Link}
+              to="/Contacto"
+              sx={{textDecoration: 'none',margin: ' 0 1rem',color: 'inherit','&:hover': { color: 'blue'}
+              }}
+            >
+              Contacto
+            </Button>
+          </ul>
         </Box>
 
         <CartWidget />
@@ -57,3 +68,5 @@ function NavBar() {
 }
 
 export default NavBar;
+
+

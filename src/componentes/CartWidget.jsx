@@ -1,9 +1,10 @@
+import { Link } from "react-router-dom"
 import cart from "../assets/cart.png"
 
 const styles = {
     img: {
-        height: "30px",
-        width: "30px",
+        height: "35px",
+        width: "35px",
     },
     span: {
         color: "white",
@@ -13,7 +14,7 @@ const styles = {
 
 export const CartWidget = () =>( 
     <> 
-     <img style={styles.img} src={cart} alt="changuito"/>
+     <Link to='/carrito'><img style={styles.img} src={cart} alt="changuito"/></Link>
       <span style={styles.span}>0</span>
      </>
     )

@@ -1,31 +1,47 @@
-import { useState, useEffect } from "react"
-import { BrowserRouter } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import { pedirDatos } from '../helpers/pedirDatos';
-import { useParams } from "react-router-dom";
-import {ItemList} from './ItemList'
-import { Container } from "@mui/material";
+import { useParams } from 'react-router-dom';
+import { ItemList } from './ItemList';
+import { CircularProgress, Container, Box } from '@mui/material';
+import NavCategory from './NavCategory';
 
-export const ItemListContainer = props => { 
-    const [productos, setProductos] = useState([]);
+export const ItemListContainer = (props) => {
+  const [productos, setProductos] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    const {id} = useParams()
+  const { id } = useParams();
 
-    useEffect(() => {
-      pedirDatos()
-        .then((resultado) =>{
-            if(id){
-                setProductos(resultado.filter(producto => producto.category === id));
-            } else{
-                setProductos(resultado);
-            }
-            
-        })
-    }, [id])
-return( 
+  useEffect(() => {
+    setLoading(true); 
 
+    pedirDatos()
+      .then((resultado) => {
+        if (id) {
+          setProductos(resultado.filter((producto) => producto.category === id));
+        } else {
+          setProductos(resultado);
+        }
+      })
+      .finally(() => {
+        setLoading(false); 
+      });
+  }, [id]);
+
+  return (
     <Container>
-       {productos.length === 0 ? <div>Loading...</div>: <ItemList productos={productos}/>} 
+      <NavCategory/>
+      {loading ? (
+        <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
+        <CircularProgress size={80} />
+      </Box>
+      ) : (
+        <ItemList productos={productos} />
+      )}
     </Container>
-    
-)
-}
+  );
+};
