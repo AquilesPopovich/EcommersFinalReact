@@ -23,7 +23,7 @@ export const ItemCount = ({sumar,restar, cantidad, agregar}) => {
         variant="contained"
         onClick={agregar}
         disabled={cantidad === 0}
-        sx={{ width: '100%' }}
+        sx={{ width: '60%', mt: 4, backgroundColor: '#212121', color: '#ffffff' }}
       >
         Agregar al Carrito
       </Button>

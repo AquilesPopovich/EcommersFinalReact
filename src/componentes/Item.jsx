@@ -11,7 +11,7 @@ const truncateTitle = (title, maxWords) => {
 };
 
 const Item = ({ productos }) => {
-  const truncatedTitle = truncateTitle(productos.title, 6);
+  const truncatedTitle = truncateTitle(productos.title, 5);
 
   return (
     <Card sx={{ m: 3, height: '450px', width: '350px', display: 'flex' , flexDirection: 'column', '&:hover': { transform: 'scale(1.05)' } }}>
@@ -24,9 +24,9 @@ const Item = ({ productos }) => {
           <Typography component='p' variant='body2'>Precio: <span style={{ color: 'green' }}>${productos.price}</span></Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
+      <CardActions sx={{  justifyContent: 'center'}}>
         <Link to={`/item/${productos.id}`}>
-          <Button sx={{ width: '100%' }} variant='contained'>Ver Producto</Button>
+          <Button sx={{ backgroundColor: '#212121', color: '#ffffff', width: '300px', mb: '10px'}} variant='contained'>Ver Producto</Button>
         </Link>
       </CardActions>
     </Card>

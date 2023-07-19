@@ -11,7 +11,7 @@ import data from '../data/data.json';
 
 function NavBar() {
   return (
-    <AppBar position="static" sx={{ background: 'black', marginBottom: '15px', borderRadius: '10px' }}>
+    <AppBar position="static" sx={{ background: 'black', marginBottom: '10px', borderRadius: '10px' }}>
       <Toolbar variant="dense">
         <Typography
           variant="h6"
