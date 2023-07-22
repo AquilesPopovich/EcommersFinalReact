@@ -17,7 +17,7 @@ export const ItemListContainer = (props) => {
 
     const productosRef = collection(db, "productos")
 
-    const q = query(productosRef, where('id', '==', id))
+    const q = query(productosRef, where('category', '==', id))
 
     getDocs(q)
       .then((resp) =>{
