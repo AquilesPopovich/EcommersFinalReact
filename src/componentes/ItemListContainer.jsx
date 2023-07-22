@@ -11,15 +11,13 @@ export const ItemListContainer = (props) => {
   const [loading, setLoading] = useState(true);
 
   const { id } = useParams();
-  
 
   useEffect(() => {
     setLoading(true); 
 
     const productosRef = collection(db, "productos")
 
-    const q = query(productosRef, where('category', '==', id));
-
+    const q = query(productosRef, where('id', '==', id))
 
     getDocs(q)
       .then((resp) =>{

@@ -7,7 +7,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import logo from "../assets/logo.png";
-import data from '../data/data.json';
+import {data} from '../data/data.json'
 
 function NavBar() {
   return (
