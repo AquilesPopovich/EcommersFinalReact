@@ -52,11 +52,11 @@ function NavBar() {
             </Button>
             <Button
               component={Link}
-              to="/Contacto"
+              to="/Login"
               sx={{textDecoration: 'none',margin: ' 0 1rem',color: 'inherit','&:hover': { color: 'blue'}
               }}
             >
-              Contacto
+              Logeate
             </Button>
           </ul>
         </Box>

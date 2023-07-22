@@ -3,7 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavBar from './componentes/NavBar';
 import { ItemListContainer } from "./componentes/ItemListContainer";
 import {ItemDetailContainer} from './componentes/ItemDetailContainer'
-import {Contacto} from './componentes/Contacto'
+import {Registro} from './componentes/Registro'
+import {Login} from './componentes/Login'
 import {Home} from './componentes/Home'
 import CartProvider from './context/CartContext'
 import Carrito from './componentes/Carrito.jsx'
@@ -16,7 +17,8 @@ function App() {
         <NavBar />
         <Routes>
           <Route path='/home' element={<Home/>}/>
-          <Route path='/contacto' element={<Contacto/>}/>
+          <Route path='/registro' element={<Registro/>}/>
+          <Route path='/login' element={<Login/>}/>
           <Route path='/carrito' element={<Carrito/>}/>
           <Route path="/" element={<ItemListContainer greetings="Productos" />} />
           <Route path="/category/:id" element={<ItemListContainer greetings="Productos" />} />

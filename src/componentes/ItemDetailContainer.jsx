@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react"
-import { pedirDatos } from '../helpers/pedirDatos';
+
 import { useParams } from "react-router-dom";
 import {ItemDetail} from './ItemDetail';
 import NavCategory from './NavCategory'
 import { CircularProgress, Container, Box } from '@mui/material';
+import {doc,getDoc} from 'firebase/firestore'
+import { db } from "../firebase/config";
 
 export const ItemDetailContainer = props => { 
     const [productos, setProductos] = useState([]);
@@ -13,12 +15,15 @@ export const ItemDetailContainer = props => {
     const {id} = useParams()
 
     useEffect(() => {
-        setLoading(true);
-      pedirDatos()
-        .then((resultado) =>{ 
-            const productEncontrado = resultado.find((product) => product.id == id);
-            setProductos(productEncontrado || {});
-        }).finally(() => {
+
+      const docRef = doc(db, "productos", id);
+      getDoc(docRef)
+        .then((resp) => {
+          setProductos(
+            {...resp.data(), id: resp.id}
+          )
+        })
+        .finally(() => {
             setLoading(false); 
           });
     }, [id])

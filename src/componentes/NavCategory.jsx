@@ -9,6 +9,10 @@ import data from '../data/data.json';
 const categorias = data.map((producto) => producto.category);
 const unique = new Set(categorias);
 
+
+
+
+
 function NavCategory() {
   const location = useLocation();
   const [activeCategory, setActiveCategory] = useState('');
