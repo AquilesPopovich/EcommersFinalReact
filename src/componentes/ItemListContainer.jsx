@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, where, getFirestore } from 'firebase/firestore';
 import { useParams } from 'react-router-dom';
 import { ItemList } from './ItemList';
 import { CircularProgress, Container, Box } from '@mui/material';
 import NavCategory from './NavCategory';
-import {db} from '../firebase/config'
+import { db } from '../firebase/config'
 
 export const ItemListContainer = (props) => {
   const [productos, setProductos] = useState([]);
@@ -13,25 +13,19 @@ export const ItemListContainer = (props) => {
   const { id } = useParams();
 
   useEffect(() => {
-    setLoading(true); 
+    setLoading(true);
 
-    const productosRef = collection(db, "productos")
+        const db = getFirestore(); 
+        const itemsCollection = collection(db, "items");
+        const q = id ? query(itemsCollection, where("category", "==", id)) : itemsCollection;
 
-    const q = query(productosRef, where('category', '==', id))
+        getDocs(q).then((snapShot) => {
+          setProductos(snapShot.docs.map((doc) => ({id:doc.id, ...doc.data()})
+            ));
+            setLoading(false);
+        });
 
-    getDocs(q)
-      .then((resp) =>{
-        setProductos(
-          resp.docs.map((doc) =>{
-            return {...doc.data(), id: doc.id}
-          })
-        )
-      })
-      .finally(() => {
-        setLoading(false); 
-      });
 
-      
 
   }, [id]);
 
