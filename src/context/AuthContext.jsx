@@ -13,23 +13,23 @@ export const useAuth = () =>{
 export function AuthProvider ({children}){
 
     const [user, setUser] = useState(null)
-    const [loading, setLoading] = useState(true)
 
     const signup = (email, password)=>createUserWithEmailAndPassword(auth, email, password)
 
     const login = (email, password)=>signInWithEmailAndPassword(auth,email,password)
 
-    const logOut = signOut(auth)
+    const logOut = () => signOut(auth)
     
     useEffect(() => {
-        const unsuscribe = onAuthStateChanged(auth, currentUser =>{
+         onAuthStateChanged(auth, currentUser =>{
+            if(currentUser){ 
             setUser(currentUser)
-            setLoading(false)
+        }else{ 
+            setUser(null)
+        }
         })
-
-        return () => unsuscribe()
     }, [])
 
-    return <contextAuth.Provider value={{signup, login, user, logOut, loading}}>{children}</contextAuth.Provider>
+    return <contextAuth.Provider value={{signup, login, user, logOut}}>{children}</contextAuth.Provider>
 }
 
