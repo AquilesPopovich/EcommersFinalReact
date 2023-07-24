@@ -4,7 +4,7 @@ import { Button, Container, Typography, Box, FormControl, InputLabel, Input, For
 import { useNavigate } from 'react-router-dom';
 
 export const Home = () => {
-  const { user, logOut } = useAuth();
+  const { user, logOut, loading } = useAuth();
   const navigate = useNavigate()
 
   const handleLogOut = async () => {
@@ -12,7 +12,7 @@ export const Home = () => {
    navigate('/login')
   }
 
-  if (user) {
+  if (loading) {
     return <Container>
     <Typography>Welcome ${user.email}</Typography>
 

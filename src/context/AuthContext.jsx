@@ -13,6 +13,7 @@ export const useAuth = () =>{
 export function AuthProvider ({children}){
 
     const [user, setUser] = useState(null)
+    const [loading, setLoading] = useState(true)
 
     const signup = (email, password)=>createUserWithEmailAndPassword(auth, email, password)
 
@@ -23,9 +24,10 @@ export function AuthProvider ({children}){
     useEffect(() => {
         onAuthStateChanged(auth, currentUser =>{
             setUser(currentUser)
+            setLoading(false)
         })
     }, [])
 
-    return <contextAuth.Provider value={{signup, login, user, logOut}}>{children}</contextAuth.Provider>
+    return <contextAuth.Provider value={{signup, login, user, logOut, loading}}>{children}</contextAuth.Provider>
 }
 
