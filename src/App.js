@@ -9,6 +9,7 @@ import {Home} from './componentes/Home';
 import CartProvider from './context/CartContext';
 import Carrito from './componentes/Carrito.jsx';
 import { AuthProvider } from './context/AuthContext';
+import { ProtectedRoute } from './componentes/ProtectedRoutes';
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
         <NavBar />
         <AuthProvider>
         <Routes>
-          <Route path='/home' element={<Home/>}/>
+          <Route path='/home' element={<ProtectedRoute><Home/></ProtectedRoute>}/>
           <Route path='/registro' element={<Registro/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/carrito' element={<Carrito/>}/>

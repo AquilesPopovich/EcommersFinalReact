@@ -22,10 +22,12 @@ export function AuthProvider ({children}){
     const logOut = signOut(auth)
     
     useEffect(() => {
-        onAuthStateChanged(auth, currentUser =>{
+        const unsuscribe = onAuthStateChanged(auth, currentUser =>{
             setUser(currentUser)
             setLoading(false)
         })
+
+        return () => unsuscribe()
     }, [])
 
     return <contextAuth.Provider value={{signup, login, user, logOut, loading}}>{children}</contextAuth.Provider>
