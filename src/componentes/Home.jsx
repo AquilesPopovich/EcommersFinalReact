@@ -1,10 +1,8 @@
 
 
+
+
 export const Home = () => {
-    return(
-        <>
-        home
-        </>
-    )
+   return <>Home</>
 }
 

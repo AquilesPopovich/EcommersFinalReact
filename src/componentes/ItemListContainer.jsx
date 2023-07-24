@@ -16,7 +16,7 @@ export const ItemListContainer = (props) => {
     setLoading(true);
 
         const db = getFirestore(); 
-        const itemsCollection = collection(db, "items");
+        const itemsCollection = collection(db, "productos");
         const q = id ? query(itemsCollection, where("category", "==", id)) : itemsCollection;
 
         getDocs(q).then((snapShot) => {

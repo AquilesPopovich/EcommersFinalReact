@@ -1,16 +1,33 @@
-import React from 'react';
-import {Link} from 'react-router-dom'
+import React, { useState } from 'react';
+import {Link, useNavigate} from 'react-router-dom'
 import { Button, Container, Typography, Box, FormControl, InputLabel, Input, FormHelperText } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { useAuth } from '../context/AuthContext';
 
 export const Registro = () => {
-  const { register, handleSubmit } = useForm();
+  const [user, setUser] = useState({
+    email: '',
+    password: '',
+    nombre: '',
+  });
 
-  const enviar = (data) => {
-    console.log(data);
-    
-  };
+  const {signup} = useAuth()
+  const navigate = useNavigate()
+  const [error, setError] = useState()
 
+  const handleChange = ({target: {name, value}}) =>{
+    setUser({...user, [name]: value})
+  }
+
+  const handleSubmit = async (e) =>{
+    e.preventDefault()
+   try {
+    await signup(user.email, user.password) 
+    navigate('/')
+   } catch (error) {
+    setError(error.message)
+   }
+  }
 
   return (
     <Container maxWidth='md' sx={{ border: '1px solid #ccc', borderRadius: '8px', p: 4, mt: 4 }}>
@@ -20,11 +37,12 @@ export const Registro = () => {
           ¿Ya contas con una cuenta? <Link to='/login'>Haz clic aquí</Link>
         </Typography>
       </Box>
-      <form onSubmit={handleSubmit(enviar)}>
+      <form onSubmit={handleSubmit}>
         <FormControl fullWidth sx={{ mb: 3 }}>
           <InputLabel htmlFor='nombres'>Nombre completo</InputLabel>
           <Input
-            {...register('nombre')}
+            onChange={handleChange}
+            name='nombre'
             id='nombres'
             type='text'
             aria-describedby='nombres-helper'
@@ -34,7 +52,8 @@ export const Registro = () => {
         <FormControl fullWidth sx={{ mb: 3 }}>
           <InputLabel htmlFor='email'>Email</InputLabel>
           <Input
-            {...register('email')}
+          onChange={handleChange}
+            name='email'
             id='email'
             type='email'
             aria-describedby='email-helper'
@@ -42,19 +61,10 @@ export const Registro = () => {
           <FormHelperText id='email-helper'>Ingrese su email</FormHelperText>
         </FormControl>
         <FormControl fullWidth sx={{ mb: 3 }}>
-          <InputLabel htmlFor='nombreUsuario'>Nombre de Usuario</InputLabel>
-          <Input
-            {...register('nombreUsuario')}
-            id='nombreUsuario'
-            type='text'
-            aria-describedby='nombreUsuario-helper'
-          />
-          <FormHelperText id='nombreUsuario-helper'>Ingrese su nombre de Usuario</FormHelperText>
-        </FormControl>
-        <FormControl fullWidth sx={{ mb: 3 }}>
           <InputLabel htmlFor='password'>Contraseña</InputLabel>
           <Input
-            {...register('password')}
+          onChange={handleChange}
+            name='password'
             id='password'
             type='password'
             aria-describedby='password-helper'
@@ -63,9 +73,9 @@ export const Registro = () => {
         </FormControl>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
       <Button type='submit' variant='contained' sx={{ backgroundColor: '#212121' }}>
-        <Link to="/login" style={{ color: 'white', textDecoration: 'none' }}>
+        
           <Typography variant="body1">Registrarme</Typography>
-        </Link>
+       
       </Button>
     </Box>
       </form>
