@@ -1,19 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import { CartContext } from '../context/CartContext';
-import { useForm } from 'react-hook-form';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { useAuth } from '../context/AuthContext';
-import { Container, Typography, TextField, Button } from '@mui/material';
+import { Button, Container, Typography, Box, FormControl, InputLabel, Input, FormHelperText } from '@mui/material';
 
-const Checkout = () => {
+export const Checkout = () => {
   const { carrito, precioTotal, handleVaciar } = useContext(CartContext);
-  const [register, handleSubmit] = useForm();
   const { user } = useAuth();
+  const formRef = useRef();
 
-  const comprar = async (data) => {
+  const comprar = async (e) => {
+    e.preventDefault();
+    const data = new FormData(formRef.current);
+
     const pedido = {
-      cliente: user + data.direccion, 
+      cliente: 'nombre: ' + user.nombres+ ' correo: ' + user.email + ' direccion: ' + data.get('direccion'), 
       pedido: carrito,
       total: precioTotal(),
     };
@@ -25,25 +27,22 @@ const Checkout = () => {
   };
 
   return (
-    <Container maxWidth='md' sx={{ mt: 4 }}>
-      <Typography variant='h4' sx={{ mb: 2 }}>
-        Finalizar compra
-      </Typography>
-      <form onSubmit={handleSubmit(comprar)}>
-        <TextField
-          label='Escribe tu dirección'
-          variant='outlined'
-          fullWidth
-          {...register('direccion')}
-          sx={{ mb: 2 }}
-        />
-
-        <Button type='submit' variant='contained' sx={{ backgroundColor: '#212121', color: '#ffffff' }}>
+    <Container maxWidth='md' sx={{ border: '1px solid #ccc', borderRadius: '8px', p: 4, mt: 4 }}>
+    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+      <Typography variant='h4'>Checkout</Typography>
+    </Box>
+    <form ref={formRef} onSubmit={comprar}>
+      <FormControl fullWidth sx={{ mb: 3 }}>
+        <InputLabel htmlFor='direccion'>Direccion</InputLabel>
+        <Input  name='direccion' id='direccion' type='text' aria-describedby='direccion-helper' />
+        <FormHelperText id='direccion-helper'>Ingrese su direccion</FormHelperText>
+      </FormControl>
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Button type='submit' variant='contained' sx={{ backgroundColor: '#212121' }}>
           Comprar
         </Button>
-      </form>
-    </Container>
+      </Box>
+    </form>
+  </Container>
   );
 };
-
-export default Checkout;

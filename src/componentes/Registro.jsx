@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Container, Typography, Box, FormControl, InputLabel, Input, FormHelperText } from '@mui/material';
-import { useForm } from 'react-hook-form';
 import { useAuth } from '../context/AuthContext';
 
 export const Registro = () => {
