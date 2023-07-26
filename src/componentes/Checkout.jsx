@@ -3,15 +3,17 @@ import { CartContext } from '../context/CartContext';
 import { useForm } from 'react-hook-form';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
+import { useAuth } from '../context/AuthContext';
 import { Container, Typography, TextField, Button } from '@mui/material';
 
 const Checkout = () => {
   const { carrito, precioTotal, handleVaciar } = useContext(CartContext);
   const [register, handleSubmit] = useForm();
+  const { user } = useAuth();
 
   const comprar = async (data) => {
     const pedido = {
-      cliente: data.direccion, 
+      cliente: user + data.direccion, 
       pedido: carrito,
       total: precioTotal(),
     };

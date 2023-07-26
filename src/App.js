@@ -10,7 +10,7 @@ import CartProvider from './context/CartContext';
 import Carrito from './componentes/Carrito.jsx';
 import { AuthProvider } from './context/AuthContext';
 import { ProtectedRoute } from './componentes/ProtectedRoutes';
-import Checkout from './componentes/Checkout';
+import {Checkout} from './componentes/Checkout'
 
 function App() {
   return (
