@@ -8,7 +8,7 @@ export const Registro = () => {
   const [user, setUser] = useState({
     email: '',
     password: '',
-    nombre: '',
+    nombres: '',
   });
 
   const { signup } = useAuth();
@@ -22,8 +22,8 @@ export const Registro = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await signup(user.email, user.password);
-      navigate('/');
+      await signup(user.email, user.password, user.nombres);
+      navigate('/login');
     } catch (error) {
       setError(error.message);
     }

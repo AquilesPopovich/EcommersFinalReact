@@ -7,13 +7,17 @@ export const Home = () => {
  
 
   const handleLogOut = async () => {
-   await logOut()
+   try {
+    await logOut()
+   } catch (error) {
+    console.log(error)
+   }
   }
 
-    return (<Container>
-    <Typography>Welcome ${user.email}</Typography>
+    return (<Container sx={{display: 'flex',flexDirection: 'column',alignItems: 'center', mt: 4}}>
+    <Typography sx={{fontSize: '2rem',fontWeight: 'bold', mb: 2}}>Welcome ${user.displayName || user.email}</Typography>
 
-    <Button onClick={handleLogOut}>Logout</Button>
+    <Button sx={{backgroundColor: '#212121',color: '#ffffff','&:hover': {backgroundColor: '#333'}}} onClick={handleLogOut}>Logout</Button>
 
     </Container>);
   

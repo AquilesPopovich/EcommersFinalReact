@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Button, Container, Typography } from '@mui/material';
 import { CartContext } from '../context/CartContext';
+import {Link} from 'react-router-dom'
 
 const Carrito = () => {
   const { carrito, precioTotal, handleVaciar } = useContext(CartContext);
@@ -63,6 +64,9 @@ const Carrito = () => {
             >
               Vaciar
             </Button>
+
+              <Link to='/checkout'>Finalizar compra</Link>
+
           </div>
         </>
       ) : (

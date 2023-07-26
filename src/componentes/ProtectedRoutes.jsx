@@ -6,7 +6,7 @@ export function ProtectedRoute({children}){
 
     
 
-    if(!user) return <Navigate to={'/login'} />
+    if(!user) return <><h2>Please login to continue</h2></>
 
     return <>{children}</>
 }

@@ -1,28 +1,36 @@
 import { useState, createContext, useEffect } from "react";
-
+import { useAuth } from "./AuthContext";
 export const CartContext = createContext();
 
 const carritoInicial = JSON.parse(localStorage.getItem("carrito")) || [];
 
 const CartProvider = ({ children }) => {
   const [carrito, setCarrito] = useState(carritoInicial);
+  const { user } = useAuth();
 
   const agregarAlCarrito = (item, cantidad) => {
-    const itemAgregado = { ...item, cantidad };
+    if (user) {
+      const itemAgregado = { ...item, cantidad };
+      const nuevoCarrito = [...carrito];
+      const estaEnElCarrito = nuevoCarrito.find(
+        (producto) => producto.id === itemAgregado.id
+      );
 
-    const nuevoCarrito = [...carrito];
-    const estaEnElCarrito = nuevoCarrito.find(
-      (producto) => producto.id === itemAgregado.id
-    );
+      if (estaEnElCarrito) {
+        estaEnElCarrito.cantidad += cantidad;
+      } else {
+        nuevoCarrito.push(itemAgregado);
+      }
 
-    if (estaEnElCarrito) {
-      estaEnElCarrito.cantidad += cantidad;
+      setCarrito(nuevoCarrito);
     } else {
-      nuevoCarrito.push(itemAgregado);
+      alert('Necesitas iniciar sesión para acceder al carrito');
     }
-
-    setCarrito(nuevoCarrito);
   };
+
+  
+
+
 
   const precioTotal = () =>{
     return(carrito.reduce((acumulador, producto) => acumulador + producto.price * producto.cantidad, 0))

@@ -10,26 +10,30 @@ import CartProvider from './context/CartContext';
 import Carrito from './componentes/Carrito.jsx';
 import { AuthProvider } from './context/AuthContext';
 import { ProtectedRoute } from './componentes/ProtectedRoutes';
+import Checkout from './componentes/Checkout';
 
 function App() {
   return (
     <>
+    <AuthProvider>
       <CartProvider>
       <BrowserRouter>
         <NavBar />
-        <AuthProvider>
+        
         <Routes>
           <Route path='/home' element={<ProtectedRoute><Home/></ProtectedRoute>}/>
           <Route path='/registro' element={<Registro/>}/>
           <Route path='/login' element={<Login/>}/>
-          <Route path='/carrito' element={<Carrito/>}/>
+          <Route path='/carrito' element={<ProtectedRoute><Carrito/></ProtectedRoute>}/>
           <Route path="/" element={<ItemListContainer greetings="Productos" />} />
           <Route path="/category/:id" element={<ItemListContainer greetings="Productos" />} />
           <Route path="/item/:id" element={<ItemDetailContainer/>} />
+          <Route path="/checkout" element={<Checkout/>} />
         </Routes>
-        </AuthProvider>
+       
       </BrowserRouter>
       </CartProvider>
+      </AuthProvider>
       </>
   );
 }

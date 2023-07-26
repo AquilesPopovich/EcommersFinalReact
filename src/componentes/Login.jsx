@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useAuth } from '../context/AuthContext';
 
 export const Login = () => {
-  const { login } = useAuth();
+  const { login, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
   const [error, setError] = useState('');
   const {
@@ -22,6 +22,15 @@ export const Login = () => {
       setError(error.message);
     }
   };
+
+  const handleLoginGoogle = async () =>{
+    try {
+      await loginWithGoogle();
+      navigate('/');
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
 
   return (
     <Container maxWidth='md' sx={{ border: '1px solid #ccc', borderRadius: '8px', p: 4, mt: 6 }}>
@@ -64,6 +73,7 @@ export const Login = () => {
           </Button>
         </Box>
       </form>
+      <Button onClick={handleLoginGoogle}>Login with google</Button>
       {error && <Typography color='error'>{error}</Typography>}
     </Container>
   );
