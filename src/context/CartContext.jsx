@@ -12,9 +12,7 @@ const CartProvider = ({ children }) => {
     if (user) {
       const itemAgregado = { ...item, cantidad };
       const nuevoCarrito = [...carrito];
-      const estaEnElCarrito = nuevoCarrito.find(
-        (producto) => producto.id === itemAgregado.id
-      );
+      const estaEnElCarrito = nuevoCarrito.find((producto) => producto.id === itemAgregado.id);
 
       if (estaEnElCarrito) {
         estaEnElCarrito.cantidad += cantidad;
@@ -28,8 +26,9 @@ const CartProvider = ({ children }) => {
     }
   };
 
-  
-
+  const cantidadEnCarrito = () =>{
+    return carrito.reduce((acc,prod) =>acc + prod.cantidad, 0);
+  }
 
 
   const precioTotal = () =>{
@@ -40,20 +39,20 @@ const CartProvider = ({ children }) => {
     setCarrito([])
   };
 
-  const contadorCarrito = () => {
+ /* const contadorCarrito = () => {
     const productosUnicos = new Set();
     carrito.forEach((producto) => {
       productosUnicos.add(producto.id);
     });
     return productosUnicos.size;
-  };
+  };*/
 
   useEffect(() => {
     localStorage.setItem('carrito', JSON.stringify(carrito))
   }, [carrito])
 
   return (
-    <CartContext.Provider value={{ carrito, agregarAlCarrito, precioTotal, handleVaciar, contadorCarrito }}>
+    <CartContext.Provider value={{ carrito, agregarAlCarrito, precioTotal, handleVaciar, cantidadEnCarrito }}>
       {children}
     </CartContext.Provider>
   );

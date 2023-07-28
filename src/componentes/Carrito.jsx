@@ -64,8 +64,12 @@ const Carrito = () => {
             >
               Vaciar
             </Button>
+            <Button sx={{ backgroundColor: '#1976d2', color: '#ffffff', '&:hover': { backgroundColor: '#1565c0' } }}>
+              <Link to='/checkout' style={{ textDecoration: 'none', color: 'white' }}>
+                  Finalizar compra
+              </Link>
+            </Button>
 
-              <Link to='/checkout'>Finalizar compra</Link>
 
           </div>
         </>

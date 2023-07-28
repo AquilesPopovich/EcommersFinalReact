@@ -15,7 +15,7 @@ const styles = {
 };
 
 export const CartWidget = () => {
-  const { contadorCarrito } = useContext(CartContext);
+  const { cantidadEnCarrito } = useContext(CartContext);
 
 
   return (
@@ -23,7 +23,7 @@ export const CartWidget = () => {
       <Link to="/carrito">
         <img style={styles.img} src={cart} alt="changuito" />
       </Link>
-      <span style={styles.span}>{contadorCarrito()}</span>
+      <span style={styles.span}>{cantidadEnCarrito()}</span>
     </>
   );
 };

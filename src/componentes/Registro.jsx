@@ -5,9 +5,9 @@ import { useAuth } from '../context/AuthContext';
 
 export const Registro = () => {
   const [user, setUser] = useState({
-    email: '',
-    password: '',
     nombres: '',
+    email: '',
+    password: ''
   });
 
   const { signup } = useAuth();
@@ -21,7 +21,7 @@ export const Registro = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await signup(user.email, user.password, user.nombres);
+      await signup(user.email, user.password); // Corregir aquí, solo enviar email y contraseña
       navigate('/login');
     } catch (error) {
       setError(error.message);
@@ -33,13 +33,13 @@ export const Registro = () => {
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
         <Typography variant='h4'>Formulario de Registro</Typography>
         <Typography variant='body1'>
-          ¿Ya contas con una cuenta? <Link to='/login'>Haz clic aquí</Link>
+          ¿Ya cuentas con una cuenta? <Link to='/login'>Haz clic aquí</Link>
         </Typography>
       </Box>
       <form onSubmit={handleSubmit}>
         <FormControl fullWidth sx={{ mb: 3 }}>
           <InputLabel htmlFor='nombres'>Nombre completo</InputLabel>
-          <Input onChange={handleChange} name='nombre' id='nombres' type='text' aria-describedby='nombres-helper' />
+          <Input onChange={handleChange} name='nombres' id='nombres' type='text' aria-describedby='nombres-helper' />
           <FormHelperText id='nombres-helper'>Ingrese su nombre</FormHelperText>
         </FormControl>
         <FormControl fullWidth sx={{ mb: 3 }}>
@@ -58,6 +58,7 @@ export const Registro = () => {
           </Button>
         </Box>
       </form>
+      {error && <Typography color='error'>{error}</Typography>}
     </Container>
   );
 };

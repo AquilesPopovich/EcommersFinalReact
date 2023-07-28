@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { CartContext } from '../context/CartContext';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
@@ -7,24 +7,40 @@ import { Button, Container, Typography, Box, FormControl, InputLabel, Input, For
 
 export const Checkout = () => {
   const { carrito, precioTotal, handleVaciar } = useContext(CartContext);
+
   const { user } = useAuth();
   const formRef = useRef();
+  const [pedidoId, setPedidoId] = useState('')
 
   const comprar = async (e) => {
     e.preventDefault();
     const data = new FormData(formRef.current);
 
     const pedido = {
-      cliente: 'nombre: ' + user.nombres+ ' correo: ' + user.email + ' direccion: ' + data.get('direccion'), 
+      cliente: ' correo: ' + user.email + ' direccion: ' + data.get('direccion'), 
       pedido: carrito,
       total: precioTotal(),
     };
 
     const pedidosRef = collection(db, 'pedidos');
-    await addDoc(pedidosRef, pedido); 
-
-    handleVaciar(); 
+    await addDoc(pedidosRef, pedido)
+    .then((doc) =>{
+      setPedidoId(doc.id)
+      handleVaciar();
+     
+    })
   };
+
+  if(pedidoId){
+    return(
+      <>
+      <Container>
+        <h1>Muchas gracias por tu compra!</h1>
+        <Typography>tu numero de pedido es: {pedidoId}</Typography>
+      </Container>
+      </>
+    )
+  }
 
   return (
     <Container maxWidth='md' sx={{ border: '1px solid #ccc', borderRadius: '8px', p: 4, mt: 4 }}>
